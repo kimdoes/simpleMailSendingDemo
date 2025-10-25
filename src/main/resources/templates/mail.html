@@ -7,14 +7,26 @@
     <link rel="stylesheet">
 </head>
 <body>
-<form method="POST" th:action="@{/mail}" th:object
-    <h1>What do you want to send today?</h1>
+<form method="POST" th:action="@{/mail}">
+    <h1>이메일을 보내보세요</h1>
+    <div class="address">
+        <label for="address">이메일주소 입력</label>
+        <input type="text" name="emailAddress" />
+    </div>
     <div class="mail">
         <div class="mailAddress">
-            <lable for="title">제목
-                <input type="text" name="title">
+            <label for="title">제목</label>
+            <input type="text" name="title" />
         </div>
     </div>
+        <div class="mailContent">
+            <label for="content">내용</label>
+            <textarea name="content"></textarea>
+        </div>
+    </div>
+    <button type="submit">Send</button>
+</form>
+
 
 </body>
 </html>

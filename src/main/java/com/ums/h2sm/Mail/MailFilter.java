@@ -1,6 +1,7 @@
 package com.ums.h2sm.Mail;
 
 import com.ums.h2sm.DTO.ResponseDTO;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,14 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 @Service
 class MailFilter {
     @Value("${spring.data.password}")
     private String password;
 
-    ResponseEntity<ResponseDTO> sendMailFilter(MailContentDTO mailContentDTO) throws MessagingException {
+    void sendMailFilter(MailContentDTO mailContentDTO) throws MessagingException {
         long before = System.currentTimeMillis();
 
         ExecutorService executorService = Executors.newFixedThreadPool(5);
@@ -40,11 +42,11 @@ class MailFilter {
                 .message("메일 전송에 성공했습니다!\n메일이 도착하지 않았다면 다음을 확인해주세요\n\n에러사이트 명시")
                 .build();
 
-        System.out.println("소요시간(비동기처리) : " + (after - before));
+        //System.out.println("소요시간(비동기처리) : " + (after - before));
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(responseDTO);
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//               .body(responseDTO);
 
         //MailSender.sendMail(password, mailContentDTO);
     }
