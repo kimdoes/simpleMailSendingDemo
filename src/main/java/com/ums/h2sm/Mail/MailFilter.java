@@ -23,17 +23,11 @@ class MailFilter {
     @Value("${spring.data.password}")
     private String password;
 
-    void sendMailFilter(MailContentDTO mailContentDTO) throws MessagingException {
+    void sendMailFilter(MailContentDTO mailContentDTO) {
         long before = System.currentTimeMillis();
 
         ExecutorService executorService = Executors.newFixedThreadPool(5);
-        executorService.submit(() -> {
-            try {
-                MailSender.sendMail(password,mailContentDTO);
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        executorService.submit(() -> MailSender.sendMail(password,mailContentDTO));
 
         long after = System.currentTimeMillis();
 
@@ -54,8 +48,7 @@ class MailFilter {
 
 
     private static class MailSender {
-        private static void sendMail(String password, MailContentDTO contents)
-                throws MessagingException, AddressException {
+        private static void sendMail(String password, MailContentDTO contents) {
             System.out.println("시작");
             long before = System.currentTimeMillis();
             String user = "hongchelin422@gmail.com";
