@@ -39,3 +39,4 @@ out/
 ### Setings ###
 *.yml
 *.properties
+.ThreadTest.java

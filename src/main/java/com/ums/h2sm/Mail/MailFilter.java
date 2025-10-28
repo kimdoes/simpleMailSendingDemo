@@ -1,6 +1,7 @@
 package com.ums.h2sm.Mail;
 
 import com.ums.h2sm.DTO.ResponseDTO;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,6 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Logger;
 
 @Service
 class MailFilter {
@@ -48,7 +48,10 @@ class MailFilter {
 
 
     private static class MailSender {
+
         private static void sendMail(String password, MailContentDTO contents) {
+            final Logger log = LoggerFactory.getLogger(MailFilter.class);
+
             System.out.println("시작");
             long before = System.currentTimeMillis();
             String user = "hongchelin422@gmail.com";
@@ -83,10 +86,9 @@ class MailFilter {
                 Transport.send(message);
                 long after = System.currentTimeMillis();
                 System.out.println("소요시간 : " + (-before + after));
+                log.info("성공 | 소요시간 : {}",(after - before));
             } catch (MessagingException e) {
-                System.out.println("에러!");
-                System.out.println(e.getMessage());
-                e.printStackTrace();
+                log.error("Error : {}", e.getMessage());
             }
         }
     }
